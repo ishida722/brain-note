@@ -11,7 +11,6 @@ export default {
   name: "NoteList",
   data() {
     return {
-      noteIds: [],
       notes: [],
     };
   },

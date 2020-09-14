@@ -30,7 +30,9 @@ firebase.bindChildList = (path, list, childType) => {
         .ref(path)
         .on("value", (snapshot) => {
             list.length = 0;
-            snapshot.val().forEach(id => {
+            let childlen = snapshot.val();
+            console.log(childlen)
+            childlen.forEach(id => {
                 firebase
                     .database()
                     .ref(childType + "/" + id)
