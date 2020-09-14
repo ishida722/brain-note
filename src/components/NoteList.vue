@@ -18,23 +18,10 @@ export default {
   props: {
     noteBookId: String,
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {},
   mounted() {
-    this.noteBookId;
-    firebase.database().ref("notebooks" + "/" + this.noteBookId)
-    .on('value', (snapshot) =>
-    {
-        this.noteIds = snapshot.val().notes;
-    for (const id in this.noteIds) {
-        var noteId = this.noteIds[id]
-        console.log('for');
-        console.log(noteId);
-        firebase.database().ref('notes/' + noteId).on('value', (snapshot) => this.notes.push[snapshot.val()]);
-    };
-    }
-  }
+    firebase.bindChildList("notebooks" + "/" + this.noteBookId + "/" + "notes", this.notes, 'notes');
+  },
 };
 </script>

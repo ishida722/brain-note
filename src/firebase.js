@@ -17,11 +17,26 @@ firebase.analytics();
 
 firebase.getCurrentUser = () => {
     return new Promise((resolve, reject) => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-        unsubscribe();
-        resolve(user);
-    }, reject)
-});
+        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+            unsubscribe();
+            resolve(user);
+        }, reject)
+    });
 }
 
+firebase.bindChildList = (path, list, childType) => {
+    firebase
+        .database()
+        .ref(path)
+        .on("value", (snapshot) => {
+            list.length = 0;
+            snapshot.val().forEach(id => {
+                firebase
+                    .database()
+                    .ref(childType + "/" + id)
+                    .once("value")
+                    .then((snapshot) => list.push(snapshot.val()));
+            });
+        });
+}
 export default firebase;
